@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Retail Label Recognition / RLR</title>
+  <title>RLR — Распознавание ценовой информации</title>
 
   <style>
     body {
@@ -14,46 +14,96 @@
     }
 
     header {
-      padding: 40px 24px;
-      background: #0b1020;
+      padding: 44px 24px;
+      background: linear-gradient(135deg, #0b1020, #111827);
       color: white;
     }
 
     header a {
       color: #93c5fd;
       text-decoration: none;
+      font-weight: 600;
+    }
+
+    header h1 {
+      margin: 18px 0 12px;
+      font-size: 38px;
+      line-height: 1.15;
+    }
+
+    header p {
+      max-width: 960px;
+      font-size: 18px;
+      line-height: 1.55;
+      color: #dbeafe;
     }
 
     main {
-      max-width: 1040px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 32px 20px 60px;
+      padding: 32px 20px 70px;
     }
 
     .card {
       background: white;
       border: 1px solid #e5e7eb;
-      border-radius: 18px;
-      padding: 24px;
+      border-radius: 20px;
+      padding: 26px;
       margin-bottom: 24px;
       box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
     }
 
-    h1 {
-      margin: 0 0 12px;
-      font-size: 34px;
+    .card h2 {
+      margin-top: 0;
+      font-size: 26px;
     }
 
-    h2 {
-      margin-top: 0;
+    .lead {
+      font-size: 17px;
+      line-height: 1.65;
+      color: #334155;
+    }
+
+    .notice {
+      border-left: 5px solid #2563eb;
+      background: #eff6ff;
+      padding: 18px 20px;
+      border-radius: 14px;
+      margin-top: 18px;
+      line-height: 1.6;
+    }
+
+    .warning {
+      border-left: 5px solid #b45309;
+      background: #fffbeb;
+      padding: 18px 20px;
+      border-radius: 14px;
+      margin-top: 18px;
+      line-height: 1.6;
+    }
+
+    .pipeline {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .step {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 16px;
+      font-weight: 700;
+      color: #0f172a;
     }
 
     input[type="file"] {
       display: block;
       margin-top: 12px;
-      padding: 12px;
+      padding: 14px;
       border: 1px dashed #94a3b8;
-      border-radius: 12px;
+      border-radius: 14px;
       width: 100%;
       box-sizing: border-box;
       background: #f8fafc;
@@ -61,9 +111,9 @@
 
     textarea {
       width: 100%;
-      min-height: 160px;
+      min-height: 150px;
       padding: 14px;
-      border-radius: 12px;
+      border-radius: 14px;
       border: 1px solid #cbd5e1;
       font-size: 15px;
       resize: vertical;
@@ -72,13 +122,14 @@
 
     button {
       margin-top: 16px;
-      padding: 12px 18px;
+      padding: 13px 20px;
       border: 0;
-      border-radius: 12px;
+      border-radius: 14px;
       cursor: pointer;
-      font-weight: 700;
+      font-weight: 800;
       background: #111827;
       color: white;
+      font-size: 15px;
     }
 
     button:hover {
@@ -93,8 +144,8 @@
     }
 
     .metric {
-      padding: 16px;
-      border-radius: 14px;
+      padding: 17px;
+      border-radius: 16px;
       background: #f1f5f9;
       border: 1px solid #e2e8f0;
     }
@@ -103,12 +154,12 @@
       display: block;
       font-size: 13px;
       color: #475569;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .metric span {
-      font-size: 20px;
-      font-weight: 800;
+      font-size: 22px;
+      font-weight: 900;
       word-break: break-word;
     }
 
@@ -119,35 +170,37 @@
       color: #d1e7ff;
       overflow-x: auto;
       white-space: pre-wrap;
-      max-height: 420px;
+      max-height: 440px;
+      font-size: 14px;
+      line-height: 1.45;
     }
 
     .ok {
       color: #15803d;
-      font-weight: 700;
+      font-weight: 900;
     }
 
     .warn {
       color: #b45309;
-      font-weight: 700;
+      font-weight: 900;
     }
 
     .error {
       color: #b91c1c;
-      font-weight: 700;
+      font-weight: 900;
     }
 
     .preview-wrap {
-      margin-top: 16px;
+      margin-top: 18px;
       display: grid;
-      grid-template-columns: minmax(220px, 320px) 1fr;
-      gap: 20px;
+      grid-template-columns: minmax(240px, 360px) 1fr;
+      gap: 22px;
       align-items: start;
     }
 
     .preview-wrap img {
       width: 100%;
-      border-radius: 14px;
+      border-radius: 16px;
       border: 1px solid #e5e7eb;
       background: #f8fafc;
     }
@@ -155,12 +208,32 @@
     .small {
       color: #64748b;
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.55;
+    }
+
+    details {
+      margin-top: 14px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 800;
+      color: #1d4ed8;
+    }
+
+    code {
+      background: #eef2ff;
+      padding: 2px 6px;
+      border-radius: 6px;
     }
 
     @media (max-width: 760px) {
       .preview-wrap {
         grid-template-columns: 1fr;
+      }
+
+      header h1 {
+        font-size: 30px;
       }
     }
   </style>
@@ -168,99 +241,142 @@
 
 <body>
   <header>
-    <a href="../index.html">← Back to portfolio</a>
-    <h1>Retail Label Recognition / RLR</h1>
+    <a href="../index.html">← Назад к портфолио</a>
+    <h1>RLR — Распознавание ценовой информации</h1>
     <p>
-      Working web demo: upload a price tag image, send it to a live FastAPI backend,
-      run OCR, and extract price/code candidates.
+      Демо веб-сервиса для распознавания информации с retail-ценников.
+      Страница отправляет изображение на live backend, backend выполняет OCR
+      и пытается извлечь цену, коды и кандидаты штрихкода/QR.
     </p>
   </header>
 
   <main>
     <section class="card">
-      <h2>Project idea</h2>
-      <p>
-        Retail Label Recognition is a computer vision and OCR pipeline for extracting
-        structured information from retail price labels: prices, product codes,
-        barcode candidates and OCR text.
+      <h2>Что показывает это демо</h2>
+      <p class="lead">
+        Это публичная облегчённая демонстрация одного слоя системы:
+        загрузка изображения отдельного ценника → OCR → извлечение ключевых полей.
       </p>
-      <p class="small">
-        This public demo uses a lightweight OCR backend on a small VPS. The full research
-        version can include YOLO detection, crop selection, barcode/QR decoding,
-        PaddleOCR/Tesseract variants and CSV export.
-      </p>
+
+      <div class="notice">
+        <strong>Важно:</strong> это не финальная промышленная версия распознавания.
+        Демо работает на небольшом VPS и использует лёгкий OCR-пайплайн.
+        Его задача — показать, что frontend, backend, загрузка изображения,
+        OCR и структурирование результата уже связаны в работающий веб-сервис.
+      </div>
     </section>
 
     <section class="card">
-      <h2>Upload price tag image</h2>
-      <p>
-        Choose a JPG/PNG/WEBP/BMP image of a price tag. The frontend will send it to
-        <code>https://api.azevich.ru/api/rlr/recognize-image</code>.
+      <h2>Что заложено в полном MVP-решении</h2>
+      <p class="lead">
+        Полный MVP проекта RLR рассчитан не только на один загруженный crop-ценник,
+        а на полный цикл обработки фотографии или видео полки с товарами и ценниками.
+      </p>
+
+      <div class="pipeline">
+        <div class="step">1. Фото / видео полки</div>
+        <div class="step">2. Поиск ценников</div>
+        <div class="step">3. Crop и выравнивание</div>
+        <div class="step">4. OCR полей</div>
+        <div class="step">5. QR / barcode</div>
+        <div class="step">6. Проверка данных</div>
+        <div class="step">7. Итоговая таблица</div>
+      </div>
+
+      <div class="warning">
+        В полной версии могут использоваться YOLO-детекция ценников, выбор лучшего
+        кадра из видео, отдельное распознавание зоны рублей и копеек, QR/barcode decoding,
+        нормализация полей и экспорт результата в CSV/таблицу.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Демо: распознавание изображения ценника</h2>
+      <p class="lead">
+        Выберите изображение ценника. Сайт отправит файл на backend:
+        <code>https://api.azevich.ru/api/rlr/recognize-image</code>
       </p>
 
       <input id="imageInput" type="file" accept="image/png,image/jpeg,image/webp,image/bmp" />
-      <button id="recognizeImageBtn" type="button">Recognize image</button>
+      <button id="recognizeImageBtn" type="button">Распознать ценник</button>
 
       <div class="preview-wrap">
         <div>
-          <img id="imagePreview" alt="Image preview will appear here" style="display:none;" />
+          <img id="imagePreview" alt="Предпросмотр изображения" style="display:none;" />
         </div>
 
         <div>
           <div class="grid">
             <div class="metric">
-              <strong>Status</strong>
+              <strong>Статус</strong>
               <span id="imageStatus">—</span>
             </div>
 
             <div class="metric">
-              <strong>Card price</strong>
+              <strong>Цена по карте / основная цена</strong>
               <span id="imageCardPrice">—</span>
             </div>
 
             <div class="metric">
-              <strong>Default price</strong>
+              <strong>Цена без карты / старая цена</strong>
               <span id="imageDefaultPrice">—</span>
             </div>
 
             <div class="metric">
-              <strong>Code candidates</strong>
+              <strong>Коды товара</strong>
               <span id="imageCodes">—</span>
             </div>
 
             <div class="metric">
-              <strong>Barcode / QR decoded</strong>
+              <strong>Штрихкод / QR</strong>
               <span id="imageBarcodes">—</span>
             </div>
 
             <div class="metric">
-              <strong>Image size</strong>
+              <strong>Размер изображения</strong>
               <span id="imageSize">—</span>
             </div>
           </div>
         </div>
       </div>
+
+      <p class="small">
+        Если статус <strong>needs_review</strong>, это означает, что OCR получил текст,
+        но данных недостаточно для уверенного извлечения цены или кода.
+        Для промышленного качества требуется специализированная CV/OCR-логика полного MVP.
+      </p>
     </section>
 
     <section class="card">
-      <h2>OCR text from image</h2>
-      <pre id="ocrTextBox">Upload an image and press “Recognize image”.</pre>
+      <h2>OCR-текст, полученный из изображения</h2>
+      <pre id="ocrTextBox">Загрузите изображение и нажмите «Распознать ценник».</pre>
     </section>
 
     <section class="card">
-      <h2>Manual OCR text parser</h2>
-      <p>
-        You can also paste OCR text manually. This calls
-        <code>POST /api/rlr/parse-text</code>.
+      <h2>Технический ответ backend</h2>
+      <p class="small">
+        Этот блок нужен для демонстрации прозрачности: видно, какие поля backend реально вернул.
+      </p>
+      <pre id="jsonBox">Ответ backend появится здесь.</pre>
+    </section>
+
+    <section class="card">
+      <h2>Дополнительно: проверка parser-а по готовому OCR-тексту</h2>
+      <p class="small">
+        Этот режим нужен для разработки: можно вручную вставить текст, который уже был получен OCR,
+        и проверить, как backend извлекает цены и коды без загрузки изображения.
       </p>
 
-      <textarea id="manualText">Молоко 3.2% Цена по карте 299,95 Цена без карты 600,60 Код 1234567890 Штрихкод 4601234567893</textarea>
-      <button id="parseTextBtn" type="button">Parse OCR text</button>
-    </section>
+      <details>
+        <summary>Открыть ручную проверку OCR-текста</summary>
 
-    <section class="card">
-      <h2>Raw backend response</h2>
-      <pre id="jsonBox">Backend response will appear here.</pre>
+        <p class="small">
+          Пример текста можно вставить вручную: «Цена по карте 299,95 Цена без карты 600,60 Код 1234567890».
+        </p>
+
+        <textarea id="manualText" placeholder="Вставьте OCR-текст ценника сюда..."></textarea>
+        <button id="parseTextBtn" type="button">Разобрать OCR-текст</button>
+      </details>
     </section>
   </main>
 
@@ -296,9 +412,9 @@
     }
 
     function setLoading(message) {
-      imageStatus.textContent = "loading";
+      imageStatus.textContent = "обработка";
       imageStatus.className = "warn";
-      jsonBox.textContent = message || "Calling backend...";
+      jsonBox.textContent = message || "Отправляем запрос на backend...";
     }
 
     function formatPrice(value) {
@@ -308,8 +424,20 @@
       return String(value);
     }
 
+    function formatStatus(status) {
+      if (status === "ok") {
+        return "распознано";
+      }
+
+      if (status === "needs_review") {
+        return "нужна проверка";
+      }
+
+      return status || "неизвестно";
+    }
+
     function renderParsedResult(parsed) {
-      imageStatus.textContent = parsed.status || "unknown";
+      imageStatus.textContent = formatStatus(parsed.status);
       imageStatus.className = parsed.status === "ok" ? "ok" : "warn";
 
       imageCardPrice.textContent = formatPrice(parsed.price_card_candidate);
@@ -326,7 +454,6 @@
 
     function renderImageResponse(data) {
       const parsed = data.parsed || {};
-
       renderParsedResult(parsed);
 
       if (data.decoded_barcodes && data.decoded_barcodes.length > 0) {
@@ -339,29 +466,29 @@
         imageSize.textContent = data.image_size.width + " × " + data.image_size.height;
       }
 
-      ocrTextBox.textContent = data.ocr_text || "No OCR text returned.";
+      ocrTextBox.textContent = data.ocr_text || "OCR-текст не получен.";
       jsonBox.textContent = JSON.stringify(data, null, 2);
     }
 
     function renderTextResponse(data) {
       renderParsedResult(data);
-      ocrTextBox.textContent = data.raw_text || "No raw text.";
+      ocrTextBox.textContent = data.raw_text || "Текст не получен.";
       jsonBox.textContent = JSON.stringify(data, null, 2);
-      imageSize.textContent = "text mode";
+      imageSize.textContent = "режим текста";
     }
 
     function renderError(error) {
-      imageStatus.textContent = "error";
+      imageStatus.textContent = "ошибка";
       imageStatus.className = "error";
-      jsonBox.textContent = "API request failed:\n" + error.message;
+      jsonBox.textContent = "Ошибка запроса к API:\n" + error.message;
     }
 
     imageInput.addEventListener("change", () => {
       const file = imageInput.files[0];
 
       resetImageMetrics();
-      ocrTextBox.textContent = "Image selected. Press “Recognize image”.";
-      jsonBox.textContent = "Backend response will appear here.";
+      ocrTextBox.textContent = "Изображение выбрано. Нажмите «Распознать ценник».";
+      jsonBox.textContent = "Ответ backend появится здесь.";
 
       if (!file) {
         imagePreview.style.display = "none";
@@ -378,11 +505,11 @@
       const file = imageInput.files[0];
 
       if (!file) {
-        renderError(new Error("Please choose an image file first."));
+        renderError(new Error("Сначала выберите изображение ценника."));
         return;
       }
 
-      setLoading("Uploading image and running OCR...");
+      setLoading("Загружаем изображение и запускаем OCR...");
 
       const formData = new FormData();
       formData.append("file", file);
@@ -406,7 +533,12 @@
     });
 
     parseTextBtn.addEventListener("click", async () => {
-      setLoading("Sending OCR text to parser...");
+      if (!manualText.value.trim()) {
+        renderError(new Error("Вставьте OCR-текст для проверки parser-а."));
+        return;
+      }
+
+      setLoading("Отправляем OCR-текст в parser...");
 
       try {
         const response = await fetch(API_TEXT_URL, {
