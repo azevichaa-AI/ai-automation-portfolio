@@ -1,71 +1,262 @@
-<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PriceTag OCR</title><style>
-:root{--bg:#07111f;--text:#f6f8fb;--muted:#b7c2d8;--accent:#65d6ff;--accent2:#8cffc1;--border:rgba(255,255,255,.14);--card:rgba(255,255,255,.08)}*{box-sizing:border-box}body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 20% 10%,rgba(101,214,255,.20),transparent 32%),linear-gradient(180deg,#07111f,#070b14);line-height:1.6}.container{width:min(980px,calc(100% - 40px));margin:0 auto}a{color:inherit;text-decoration:none}.nav{border-bottom:1px solid var(--border);background:rgba(7,17,31,.82);backdrop-filter:blur(16px)}.nav-inner{height:72px;display:flex;align-items:center;justify-content:space-between}.logo{font-weight:900}.btn{display:inline-flex;border-radius:999px;padding:12px 18px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#06101d;font-weight:900}.hero{padding:72px 0 36px}.badge{display:inline-flex;padding:8px 13px;border:1px solid var(--border);border-radius:999px;color:var(--muted);background:rgba(255,255,255,.06);font-size:14px;margin-bottom:22px}h1{font-size:clamp(40px,6vw,68px);line-height:1.05;letter-spacing:-.04em;margin:0 0 20px}p{color:var(--muted);font-size:18px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:34px 0}.card{border:1px solid var(--border);border-radius:26px;background:var(--card);padding:24px}.card h2{margin:0 0 12px;font-size:25px;letter-spacing:-.03em}.mock{height:310px;border-radius:30px;border:1px solid var(--border);background:linear-gradient(135deg,rgba(101,214,255,.24),rgba(140,255,193,.12)),repeating-linear-gradient(45deg,rgba(255,255,255,.07) 0 2px,transparent 2px 13px);display:grid;place-items:center;text-align:center;padding:28px;margin:30px 0}.mock strong{font-size:34px;display:block;line-height:1.1}.cta{margin:50px 0 80px;padding:30px;border-radius:30px;border:1px solid var(--border);background:rgba(255,255,255,.1);display:flex;justify-content:space-between;gap:20px;align-items:center}@media(max-width:760px){.grid,.cta{grid-template-columns:1fr;display:block}.btn{margin-top:14px}.mock strong{font-size:28px}}
-</style></head><body><header class="nav"><div class="container nav-inner"><a class="logo" href="../index.html">← AI-автоматизация для бизнеса</a><a class="btn" href="../index.html#contact">Обсудить задачу</a></div></header><main class="container"><section class="hero"><div class="badge">CV / OCR / Retail</div><h1>PriceTag OCR</h1><p>Система распознавания retail-ценников по фото и видео с извлечением цены, штрихкода, полей товара и итогового CSV.</p><img class="demo-shot" src="../assets/screenshots/pricetag-ocr.png" alt="Скриншот проекта PriceTag OCR"><div class="grid"><div class="card"><h2>Бизнес-задача</h2><p>Сократить ручной ввод данных с ценников и ускорить контроль информации в торговой точке.</p></div><div class="card"><h2>AI-часть</h2><p>Детекция ценника, OCR, barcode-first логика, валидация полей и сбор итоговой таблицы.</p></div><div class="card"><h2>Данные</h2><p>Фото, видео, CSV/GT-разметка, справочник штрихкодов и тестовые crop-изображения.</p></div><div class="card"><h2>Статус</h2><p>MVP/исследовательская версия: есть рабочие модули OCR, barcode-first parser и CSV postprocessing.</p></div></div><div class="cta"><div><h2>Хотите похожий AI-прототип?</h2><p>Опишите задачу — можно быстро собрать MVP и проверить на ваших данных.</p></div><a class="btn" href="../index.html#contact">Обсудить задачу</a></div></section></main><section class="live-api-demo">
-  <h2>Live backend demo</h2>
-  <p>
-    This block calls the real FastAPI backend deployed at
-    <code>https://api.azevich.ru</code>.
-  </p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retail Label Recognition / RLR</title>
 
-  <button id="runApiDemoBtn" type="button">
-    Check backend API
-  </button>
-
-  <pre id="apiDemoResult">Press the button to call the backend...</pre>
-</section>
-
-<style>
-  .live-api-demo {
-    margin: 40px 0;
-    padding: 24px;
-    border: 1px solid #d0d7de;
-    border-radius: 16px;
-    background: #f6f8fa;
-  }
-
-  .live-api-demo h2 {
-    margin-top: 0;
-  }
-
-  .live-api-demo button {
-    padding: 12px 18px;
-    border: 0;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 600;
-    background: #111827;
-    color: white;
-  }
-
-  .live-api-demo pre {
-    margin-top: 16px;
-    padding: 16px;
-    border-radius: 12px;
-    background: #0b1020;
-    color: #d1e7ff;
-    overflow-x: auto;
-    white-space: pre-wrap;
-  }
-</style>
-
-<script>
-  const apiButton = document.getElementById("runApiDemoBtn");
-  const apiResult = document.getElementById("apiDemoResult");
-
-  apiButton.addEventListener("click", async () => {
-    apiResult.textContent = "Calling backend...";
-
-    try {
-      const response = await fetch("https://api.azevich.ru/api/demo/pricetag-ocr");
-
-      if (!response.ok) {
-        throw new Error("HTTP error: " + response.status);
-      }
-
-      const data = await response.json();
-      apiResult.textContent = JSON.stringify(data, null, 2);
-    } catch (error) {
-      apiResult.textContent = "API request failed:\n" + error.message;
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #111827;
     }
-  });
-</script></body></html>
+
+    header {
+      padding: 40px 24px;
+      background: #0b1020;
+      color: white;
+    }
+
+    header a {
+      color: #93c5fd;
+      text-decoration: none;
+    }
+
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 34px;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 180px;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
+      font-size: 15px;
+      resize: vertical;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 16px;
+      padding: 12px 18px;
+      border: 0;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      background: #111827;
+      color: white;
+    }
+
+    button:hover {
+      background: #1f2937;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .metric {
+      padding: 16px;
+      border-radius: 14px;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 13px;
+      color: #475569;
+      margin-bottom: 6px;
+    }
+
+    .metric span {
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    pre {
+      padding: 16px;
+      border-radius: 14px;
+      background: #0b1020;
+      color: #d1e7ff;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+
+    .ok {
+      color: #15803d;
+      font-weight: 700;
+    }
+
+    .warn {
+      color: #b45309;
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="../index.html">← Back to portfolio</a>
+    <h1>Retail Label Recognition / RLR</h1>
+    <p>
+      Working demo: OCR text parser for retail price labels.
+      Frontend calls the live FastAPI backend at <strong>api.azevich.ru</strong>.
+    </p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Project idea</h2>
+      <p>
+        This demo shows a practical part of the Retail Label Recognition pipeline:
+        extracting prices, product codes and barcode candidates from OCR text.
+      </p>
+      <p>
+        In the full system, OCR text comes from a computer vision pipeline.
+        In this lightweight web demo, you can paste OCR-like text manually and see
+        how the backend parser structures it.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Live API demo</h2>
+
+      <p>Paste OCR text from a price tag:</p>
+
+      <textarea id="ocrText">Молоко 3.2% Цена по карте 299,95 Цена без карты 600,60 Код 1234567890 Штрихкод 4601234567893</textarea>
+
+      <br />
+
+      <button id="runBtn" type="button">Parse price tag text</button>
+
+      <div class="grid">
+        <div class="metric">
+          <strong>Status</strong>
+          <span id="statusValue">—</span>
+        </div>
+
+        <div class="metric">
+          <strong>Card price</strong>
+          <span id="cardPriceValue">—</span>
+        </div>
+
+        <div class="metric">
+          <strong>Default price</strong>
+          <span id="defaultPriceValue">—</span>
+        </div>
+
+        <div class="metric">
+          <strong>Barcode candidates</strong>
+          <span id="barcodeValue">—</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Raw backend response</h2>
+      <pre id="resultBox">Press the button to call the backend...</pre>
+    </section>
+  </main>
+
+  <script>
+    const API_URL = "https://api.azevich.ru/api/rlr/parse-text";
+
+    const runBtn = document.getElementById("runBtn");
+    const ocrText = document.getElementById("ocrText");
+    const resultBox = document.getElementById("resultBox");
+
+    const statusValue = document.getElementById("statusValue");
+    const cardPriceValue = document.getElementById("cardPriceValue");
+    const defaultPriceValue = document.getElementById("defaultPriceValue");
+    const barcodeValue = document.getElementById("barcodeValue");
+
+    function setLoading() {
+      statusValue.textContent = "loading";
+      statusValue.className = "warn";
+      cardPriceValue.textContent = "—";
+      defaultPriceValue.textContent = "—";
+      barcodeValue.textContent = "—";
+      resultBox.textContent = "Calling backend...";
+    }
+
+    function renderResult(data) {
+      statusValue.textContent = data.status || "unknown";
+      statusValue.className = data.status === "ok" ? "ok" : "warn";
+
+      cardPriceValue.textContent =
+        data.price_card_candidate !== null && data.price_card_candidate !== undefined
+          ? data.price_card_candidate
+          : "—";
+
+      defaultPriceValue.textContent =
+        data.price_default_candidate !== null && data.price_default_candidate !== undefined
+          ? data.price_default_candidate
+          : "—";
+
+      barcodeValue.textContent = data.barcode_candidates
+        ? data.barcode_candidates.length
+        : 0;
+
+      resultBox.textContent = JSON.stringify(data, null, 2);
+    }
+
+    function renderError(error) {
+      statusValue.textContent = "error";
+      statusValue.className = "warn";
+      resultBox.textContent = "API request failed:\n" + error.message;
+    }
+
+    runBtn.addEventListener("click", async () => {
+      setLoading();
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            text: ocrText.value
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error("HTTP error: " + response.status);
+        }
+
+        const data = await response.json();
+        renderResult(data);
+      } catch (error) {
+        renderError(error);
+      }
+    });
+  </script>
+</body>
+</html>
