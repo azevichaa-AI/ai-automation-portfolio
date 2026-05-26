@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retail Label Recognition / RLR</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #111827;
+    }
+
+    header {
+      padding: 40px 24px;
+      background: #0b1020;
+      color: white;
+    }
+
+    header a {
+      color: #93c5fd;
+      text-decoration: none;
+    }
+
+    main {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 34px;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    input[type="file"] {
+      display: block;
+      margin-top: 12px;
+      padding: 12px;
+      border: 1px dashed #94a3b8;
+      border-radius: 12px;
+      width: 100%;
+      box-sizing: border-box;
+      background: #f8fafc;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 160px;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
+      font-size: 15px;
+      resize: vertical;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 16px;
+      padding: 12px 18px;
+      border: 0;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      background: #111827;
+      color: white;
+    }
+
+    button:hover {
+      background: #1f2937;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .metric {
+      padding: 16px;
+      border-radius: 14px;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 13px;
+      color: #475569;
+      margin-bottom: 6px;
+    }
+
+    .metric span {
+      font-size: 20px;
+      font-weight: 800;
+      word-break: break-word;
+    }
+
+    pre {
+      padding: 16px;
+      border-radius: 14px;
+      background: #0b1020;
+      color: #d1e7ff;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      max-height: 420px;
+    }
+
+    .ok {
+      color: #15803d;
+      font-weight: 700;
+    }
+
+    .warn {
+      color: #b45309;
+      font-weight: 700;
+    }
+
+    .error {
+      color: #b91c1c;
+      font-weight: 700;
+    }
+
+    .preview-wrap {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: minmax(220px, 320px) 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .preview-wrap img {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid #e5e7eb;
+      background: #f8fafc;
+    }
+
+    .small {
+      color: #64748b;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 760px) {
+      .preview-wrap {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="../index.html">← Back to portfolio</a>
+    <h1>Retail Label Recognition / RLR</h1>
+    <p>
+      Working web demo: upload a price tag image, send it to a live FastAPI backend,
+      run OCR, and extract price/code candidates.
+    </p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Project idea</h2>
+      <p>
+        Retail Label Recognition is a computer vision and OCR pipeline for extracting
+        structured information from retail price labels: prices, product codes,
+        barcode candidates and OCR text.
+      </p>
+      <p class="small">
+        This public demo uses a lightweight OCR backend on a small VPS. The full research
+        version can include YOLO detection, crop selection, barcode/QR decoding,
+        PaddleOCR/Tesseract variants and CSV export.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Upload price tag image</h2>
+      <p>
+        Choose a JPG/PNG/WEBP/BMP image of a price tag. The frontend will send it to
+        <code>https://api.azevich.ru/api/rlr/recognize-image</code>.
+      </p>
+
+      <input id="imageInput" type="file" accept="image/png,image/jpeg,image/webp,image/bmp" />
+      <button id="recognizeImageBtn" type="button">Recognize image</button>
+
+      <div class="preview-wrap">
+        <div>
+          <img id="imagePreview" alt="Image preview will appear here" style="display:none;" />
+        </div>
+
+        <div>
+          <div class="grid">
+            <div class="metric">
+              <strong>Status</strong>
+              <span id="imageStatus">—</span>
+            </div>
+
+            <div class="metric">
+              <strong>Card price</strong>
+              <span id="imageCardPrice">—</span>
+            </div>
+
+            <div class="metric">
+              <strong>Default price</strong>
+              <span id="imageDefaultPrice">—</span>
+            </div>
+
+            <div class="metric">
+              <strong>Code candidates</strong>
+              <span id="imageCodes">—</span>
+            </div>
+
+            <div class="metric">
+              <strong>Barcode / QR decoded</strong>
+              <span id="imageBarcodes">—</span>
+            </div>
+
+            <div class="metric">
+              <strong>Image size</strong>
+              <span id="imageSize">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>OCR text from image</h2>
+      <pre id="ocrTextBox">Upload an image and press “Recognize image”.</pre>
+    </section>
+
+    <section class="card">
+      <h2>Manual OCR text parser</h2>
+      <p>
+        You can also paste OCR text manually. This calls
+        <code>POST /api/rlr/parse-text</code>.
+      </p>
+
+      <textarea id="manualText">Молоко 3.2% Цена по карте 299,95 Цена без карты 600,60 Код 1234567890 Штрихкод 4601234567893</textarea>
+      <button id="parseTextBtn" type="button">Parse OCR text</button>
+    </section>
+
+    <section class="card">
+      <h2>Raw backend response</h2>
+      <pre id="jsonBox">Backend response will appear here.</pre>
+    </section>
+  </main>
+
+  <script>
+    const API_IMAGE_URL = "https://api.azevich.ru/api/rlr/recognize-image";
+    const API_TEXT_URL = "https://api.azevich.ru/api/rlr/parse-text";
+
+    const imageInput = document.getElementById("imageInput");
+    const imagePreview = document.getElementById("imagePreview");
+    const recognizeImageBtn = document.getElementById("recognizeImageBtn");
+
+    const imageStatus = document.getElementById("imageStatus");
+    const imageCardPrice = document.getElementById("imageCardPrice");
+    const imageDefaultPrice = document.getElementById("imageDefaultPrice");
+    const imageCodes = document.getElementById("imageCodes");
+    const imageBarcodes = document.getElementById("imageBarcodes");
+    const imageSize = document.getElementById("imageSize");
+
+    const ocrTextBox = document.getElementById("ocrTextBox");
+    const jsonBox = document.getElementById("jsonBox");
+
+    const manualText = document.getElementById("manualText");
+    const parseTextBtn = document.getElementById("parseTextBtn");
+
+    function resetImageMetrics() {
+      imageStatus.textContent = "—";
+      imageStatus.className = "";
+      imageCardPrice.textContent = "—";
+      imageDefaultPrice.textContent = "—";
+      imageCodes.textContent = "—";
+      imageBarcodes.textContent = "—";
+      imageSize.textContent = "—";
+    }
+
+    function setLoading(message) {
+      imageStatus.textContent = "loading";
+      imageStatus.className = "warn";
+      jsonBox.textContent = message || "Calling backend...";
+    }
+
+    function formatPrice(value) {
+      if (value === null || value === undefined) {
+        return "—";
+      }
+      return String(value);
+    }
+
+    function renderParsedResult(parsed) {
+      imageStatus.textContent = parsed.status || "unknown";
+      imageStatus.className = parsed.status === "ok" ? "ok" : "warn";
+
+      imageCardPrice.textContent = formatPrice(parsed.price_card_candidate);
+      imageDefaultPrice.textContent = formatPrice(parsed.price_default_candidate);
+
+      imageCodes.textContent = parsed.code_candidates
+        ? parsed.code_candidates.map(x => x.value).join(", ") || "0"
+        : "0";
+
+      imageBarcodes.textContent = parsed.barcode_candidates
+        ? parsed.barcode_candidates.map(x => x.value).join(", ") || "0"
+        : "0";
+    }
+
+    function renderImageResponse(data) {
+      const parsed = data.parsed || {};
+
+      renderParsedResult(parsed);
+
+      if (data.decoded_barcodes && data.decoded_barcodes.length > 0) {
+        imageBarcodes.textContent = data.decoded_barcodes
+          .map(x => x.value)
+          .join(", ");
+      }
+
+      if (data.image_size) {
+        imageSize.textContent = data.image_size.width + " × " + data.image_size.height;
+      }
+
+      ocrTextBox.textContent = data.ocr_text || "No OCR text returned.";
+      jsonBox.textContent = JSON.stringify(data, null, 2);
+    }
+
+    function renderTextResponse(data) {
+      renderParsedResult(data);
+      ocrTextBox.textContent = data.raw_text || "No raw text.";
+      jsonBox.textContent = JSON.stringify(data, null, 2);
+      imageSize.textContent = "text mode";
+    }
+
+    function renderError(error) {
+      imageStatus.textContent = "error";
+      imageStatus.className = "error";
+      jsonBox.textContent = "API request failed:\n" + error.message;
+    }
+
+    imageInput.addEventListener("change", () => {
+      const file = imageInput.files[0];
+
+      resetImageMetrics();
+      ocrTextBox.textContent = "Image selected. Press “Recognize image”.";
+      jsonBox.textContent = "Backend response will appear here.";
+
+      if (!file) {
+        imagePreview.style.display = "none";
+        imagePreview.src = "";
+        return;
+      }
+
+      const localUrl = URL.createObjectURL(file);
+      imagePreview.src = localUrl;
+      imagePreview.style.display = "block";
+    });
+
+    recognizeImageBtn.addEventListener("click", async () => {
+      const file = imageInput.files[0];
+
+      if (!file) {
+        renderError(new Error("Please choose an image file first."));
+        return;
+      }
+
+      setLoading("Uploading image and running OCR...");
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      try {
+        const response = await fetch(API_IMAGE_URL, {
+          method: "POST",
+          body: formData
+        });
+
+        if (!response.ok) {
+          const text = await response.text();
+          throw new Error("HTTP error " + response.status + ":\n" + text);
+        }
+
+        const data = await response.json();
+        renderImageResponse(data);
+      } catch (error) {
+        renderError(error);
+      }
+    });
+
+    parseTextBtn.addEventListener("click", async () => {
+      setLoading("Sending OCR text to parser...");
+
+      try {
+        const response = await fetch(API_TEXT_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            text: manualText.value
+          })
+        });
+
+        if (!response.ok) {
+          const text = await response.text();
+          throw new Error("HTTP error " + response.status + ":\n" + text);
+        }
+
+        const data = await response.json();
+        renderTextResponse(data);
+      } catch (error) {
+        renderError(error);
+      }
+    });
+  </script>
+</body>
+</html>
