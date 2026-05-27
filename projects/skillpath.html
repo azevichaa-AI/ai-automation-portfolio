@@ -1,10 +1,442 @@
-﻿<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>SkillPath AI</title><style>
-:root{--bg:#07111f;--text:#f6f8fb;--muted:#b7c2d8;--accent:#65d6ff;--accent2:#8cffc1;--border:rgba(255,255,255,.14);--card:rgba(255,255,255,.08)}*{box-sizing:border-box}body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 20% 10%,rgba(101,214,255,.20),transparent 32%),linear-gradient(180deg,#07111f,#070b14);line-height:1.6}.container{width:min(980px,calc(100% - 40px));margin:0 auto}a{color:inherit;text-decoration:none}.nav{border-bottom:1px solid var(--border);background:rgba(7,17,31,.82);backdrop-filter:blur(16px)}.nav-inner{height:72px;display:flex;align-items:center;justify-content:space-between}.logo{font-weight:900}.btn{display:inline-flex;border-radius:999px;padding:12px 18px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#06101d;font-weight:900}.hero{padding:72px 0 36px}.badge{display:inline-flex;padding:8px 13px;border:1px solid var(--border);border-radius:999px;color:var(--muted);background:rgba(255,255,255,.06);font-size:14px;margin-bottom:22px}h1{font-size:clamp(40px,6vw,68px);line-height:1.05;letter-spacing:-.04em;margin:0 0 20px}p{color:var(--muted);font-size:18px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:34px 0}.card{border:1px solid var(--border);border-radius:26px;background:var(--card);padding:24px}.card h2{margin:0 0 12px;font-size:25px;letter-spacing:-.03em}.mock{height:340px;border-radius:30px;border:1px solid var(--border);background:linear-gradient(135deg,rgba(101,214,255,.24),rgba(140,255,193,.12)),repeating-linear-gradient(45deg,rgba(255,255,255,.07) 0 2px,transparent 2px 13px);display:grid;place-items:center;padding:28px;margin:30px 0}.demo{width:min(720px,100%);border:1px solid rgba(255,255,255,.12);border-radius:24px;background:rgba(7,17,31,.62);padding:22px}.demo-row{display:grid;grid-template-columns:1fr auto;gap:14px;border-bottom:1px solid rgba(255,255,255,.10);padding:12px 0}.demo-row:last-child{border-bottom:0}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:rgba(140,255,193,.14);color:var(--accent2);font-size:13px;font-weight:900}.cta{margin:50px 0 80px;padding:30px;border-radius:30px;border:1px solid var(--border);background:rgba(255,255,255,.1);display:flex;justify-content:space-between;gap:20px;align-items:center}@media(max-width:760px){.grid,.cta{display:block}.btn{margin-top:14px}.demo-row{grid-template-columns:1fr}.mock{height:auto}}
-.screen-image{
-  width:100%;
-  border-radius:30px;
-  border:1px solid rgba(255,255,255,.14);
-  box-shadow:0 24px 80px rgba(0,0,0,.35);
-  margin:30px 0;
-  display:block;
-}</style></head><body><header class="nav"><div class="container nav-inner"><a class="logo" href="../index.html">← AI-автоматизация для бизнеса</a><a class="btn" href="../index.html#contact">Обсудить задачу</a></div></header><main class="container"><section class="hero"><div class="badge">EdTech / HR / персональное обучение</div><h1>SkillPath AI</h1><p>Собственный демонстрационный проект для портфолио: AI-сервис, который помогает компании проверить знания сотрудника по выбранной теме, найти пробелы и собрать персональный план обучения.</p><img class="screen-image" src="../assets/screenshots/skillpath-ai.png" alt="Скриншот SkillPath AI"><div class="mock"><div class="demo"><div class="demo-row"><div><b>Тема обучения</b><br><span style="color:#b7c2d8">Например: продажи, клиентский сервис, внутренние регламенты, AI-грамотность</span></div><span class="pill">input</span></div><div class="demo-row"><div><b>Короткая диагностика</b><br><span style="color:#b7c2d8">Вопросы по теме, уровень уверенности, комментарии сотрудника</span></div><span class="pill">test</span></div><div class="demo-row"><div><b>Карта пробелов</b><br><span style="color:#b7c2d8">Что уже понятно, что требует повторения, какие материалы нужны</span></div><span class="pill">AI analysis</span></div><div class="demo-row"><div><b>Индивидуальный маршрут</b><br><span style="color:#b7c2d8">План: теория → практика → проверочное задание</span></div><span class="pill">plan</span></div></div></div><div class="grid"><div class="card"><h2>Бизнес-задача</h2><p>Сократить время адаптации сотрудников и сделать обучение не одинаковым для всех, а завязанным на реальные пробелы человека.</p></div><div class="card"><h2>AI-часть</h2><p>Анализ ответов, выявление пробелов, объяснение ошибок, формирование персонального учебного плана.</p></div><div class="card"><h2>Данные</h2><p>Темы, вопросы, уровни сложности, учебные материалы, правила проверки и критерии результата. Все данные задаются владельцем проекта.</p></div><div class="card"><h2>Важно</h2><p>Это самостоятельный портфолио-концепт. Он не использует название, материалы, ТЗ или клиентскую логику сторонних проектов.</p></div></div><div class="cta"><div><h2>Хотите похожий AI-прототип?</h2><p>Такой подход можно адаптировать под продажи, сервис, обучение операторов, внутреннюю базу знаний или onboarding.</p></div><a class="btn" href="../index.html#contact">Обсудить задачу</a></div></section></main></body></html>
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SkillPath — AI-диагностика менеджеров по продажам</title>
+  <meta name="description" content="SkillPath помогает оценить компетенции менеджеров по продажам, выявить пробелы и сформировать индивидуальный план развития." />
+  <style>
+    :root{
+      --bg:#f6f8fc;--card:#fff;--text:#101828;--muted:#667085;
+      --blue:#2563eb;--blue2:#1d4ed8;--line:#e5e7eb;--soft:#eff6ff;
+      --green:#067647;--greenbg:#ecfdf3;--amber:#b54708;--amberbg:#fffaeb;
+      --red:#b42318;--redbg:#fef3f2;--shadow:0 20px 50px rgba(15,23,42,.08);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+      color:var(--text);line-height:1.55;
+      background:radial-gradient(circle at top left,rgba(37,99,235,.18),transparent 380px),linear-gradient(180deg,#fbfdff 0%,var(--bg) 100%);
+    }
+    .page{width:min(1160px,calc(100% - 32px));margin:0 auto;padding:28px 0 58px}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:34px}
+    .brand{font-weight:900;letter-spacing:-.03em;color:#0f172a}
+    .nav{display:flex;gap:14px;flex-wrap:wrap;font-size:14px}
+    a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline}
+    .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:24px;margin-bottom:24px}
+    .card{background:rgba(255,255,255,.95);border:1px solid var(--line);border-radius:28px;padding:30px;box-shadow:var(--shadow)}
+    .badge{display:inline-flex;padding:7px 12px;border-radius:999px;background:var(--soft);border:1px solid #bfdbfe;color:#1e40af;font-size:13px;font-weight:850;margin-bottom:16px}
+    h1{margin:0 0 16px;font-size:clamp(38px,5vw,62px);line-height:1.02;letter-spacing:-.06em}
+    h2{margin:0 0 14px;font-size:25px;letter-spacing:-.03em}
+    h3{margin:0 0 8px;font-size:17px}
+    p{margin:0 0 12px}.lead{font-size:19px;color:#344054;max-width:780px}.muted{color:var(--muted)}
+    .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:13px 17px;border-radius:15px;font-weight:850;text-decoration:none;border:0;cursor:pointer;font:inherit}
+    .primary{background:var(--blue);color:white}.primary:hover{background:var(--blue2);text-decoration:none}.secondary{background:#eef2ff;color:#3730a3}
+    .status{padding:14px 16px;border-radius:18px;background:var(--greenbg);color:var(--green);border:1px solid #abefc6;font-weight:750;margin-top:16px}
+    .quote{border-left:4px solid var(--blue);padding:14px 16px;background:#f8fafc;border-radius:14px;color:#344054;margin-top:16px}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:24px}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px}
+    .item{padding:18px;border:1px solid var(--line);border-radius:22px;background:#fff}
+    .num{width:36px;height:36px;display:grid;place-items:center;border-radius:13px;background:#dbeafe;color:#1d4ed8;font-weight:900;margin-bottom:12px}
+    ul{margin:10px 0 0;padding-left:20px;color:#344054} li{margin:7px 0}
+    .demoWrap{margin-top:24px;display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,.95fr);gap:20px;align-items:start}
+    .scenarioGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0 22px}
+    .scenarioCard{text-align:left;border:1px solid var(--line);background:#fff;color:var(--text);border-radius:18px;padding:15px;cursor:pointer;box-shadow:0 8px 22px rgba(15,23,42,.04)}
+    .scenarioCard:hover{border-color:#93c5fd;background:#f8fbff}
+    .scenarioCard.active{border-color:var(--blue);background:#eff6ff;box-shadow:0 0 0 4px rgba(37,99,235,.10)}
+    .scenarioCard strong{display:block;font-size:15px;margin-bottom:5px}.scenarioCard span{display:block;color:var(--muted);font-size:13px;line-height:1.35}
+    .competency{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;border:1px solid var(--line);border-radius:18px;padding:14px;background:#fff;margin-bottom:10px}
+    .levelPill{flex:0 0 auto;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:850}
+    .basic{background:var(--redbg);color:var(--red)}.medium{background:var(--amberbg);color:var(--amber)}.advanced{background:var(--greenbg);color:var(--green)}
+    .demoStatus{margin-top:14px;padding:12px 14px;border-radius:15px;background:#f8fafc;border:1px solid var(--line);color:#344054;font-size:14px}
+    .demoStatus.ok{background:var(--greenbg);border-color:#abefc6;color:var(--green)}.demoStatus.err{background:var(--redbg);border-color:#fecdca;color:var(--red)}
+    .resultBox{padding:16px;border-radius:18px;background:#f8fafc;border:1px solid var(--line);margin-bottom:14px}
+    .metric{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+    .metric div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px}
+    .trackItem{padding:13px 14px;border:1px solid var(--line);border-radius:16px;background:#fff;margin-top:10px}
+    .footer{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+    @media(max-width:900px){.hero,.grid3,.grid2,.demoWrap,.scenarioGrid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}.card{padding:22px}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="top">
+      <div class="brand">Azevich AI Portfolio</div>
+      <nav class="nav">
+        <a href="../index.html">Главная</a>
+        <a href="./document-assistant.html">Document Assistant</a>
+        <a href="./rlr.html">RLR</a>
+        <a href="https://api.azevich.ru/docs" target="_blank" rel="noreferrer">API</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="card">
+        <div class="badge">AI-решение для оценки и развития сотрудников</div>
+        <h1>SkillPath для отдела продаж</h1>
+        <p class="lead">
+          Система помогает оценить компетенции менеджеров по продажам, выявить пробелы
+          и сформировать индивидуальный план развития под роль и стандарты компании.
+        </p>
+        <p class="muted">
+          Руководитель получает не просто общий балл, а карту компетенций:
+          что уже достаточно развито, где нужен короткий практический трек,
+          а где требуется полноценное обучение.
+        </p>
+        <div class="cta">
+          <a class="btn primary" href="#interactive-demo">Посмотреть интерактивную демонстрацию</a>
+          <a class="btn secondary" href="https://api.azevich.ru/docs" target="_blank" rel="noreferrer">Открыть API</a>
+        </div>
+      </div>
+
+      <aside class="card">
+        <h2>Бизнес-эффект</h2>
+        <p>
+          SkillPath помогает быстрее понять реальный уровень команды продаж,
+          точнее планировать обучение и не тратить бюджет на одинаковые курсы для всех.
+        </p>
+        <div class="status">
+          Готовность к пилотному запуску: интерактивная диагностика и API доступны онлайн.
+        </div>
+        <div class="quote">
+          Ценность для бизнеса: обучение становится адресным — по конкретным пробелам и компетенциям.
+        </div>
+      </aside>
+    </section>
+
+    <section class="grid3">
+      <div class="item">
+        <div class="num">1</div>
+        <h3>Диагностика роли</h3>
+        <p class="muted">Оценка компетенций под конкретную должность: например, B2B sales manager.</p>
+      </div>
+      <div class="item">
+        <div class="num">2</div>
+        <h3>Карта пробелов</h3>
+        <p class="muted">Система показывает, какие навыки требуют базового, точечного или контрольного трека.</p>
+      </div>
+      <div class="item">
+        <div class="num">3</div>
+        <h3>Learning track</h3>
+        <p class="muted">После диагностики формируется персональный план развития сотрудника.</p>
+      </div>
+    </section>
+
+    <section class="grid2">
+      <div class="card">
+        <h2>Кому полезно</h2>
+        <ul>
+          <li>Руководители отделов продаж</li>
+          <li>HR и L&D-команды</li>
+          <li>Корпоративные университеты</li>
+          <li>Команды адаптации новых менеджеров</li>
+          <li>B2B-компании с регулярным обучением продажам</li>
+          <li>Компании, где нужно проверять соответствие стандартам роли</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Что оценивается</h2>
+        <ul>
+          <li>Выявление потребности клиента</li>
+          <li>Презентация ценности продукта</li>
+          <li>Работа с возражениями</li>
+          <li>CRM-дисциплина</li>
+          <li>Финансовая аргументация</li>
+          <li>Follow-up и сопровождение сделки</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Формат пилотного внедрения</h2>
+      <div class="grid3" style="margin-bottom:0;">
+        <div class="item">
+          <h3>1. Модель роли</h3>
+          <p class="muted">Фиксируются компетенции менеджера по продажам и ожидаемый уровень по каждой из них.</p>
+        </div>
+        <div class="item">
+          <h3>2. Диагностика</h3>
+          <p class="muted">Сотрудники проходят тестирование, кейсы или оценку по подготовленным сценариям.</p>
+        </div>
+        <div class="item">
+          <h3>3. План развития</h3>
+          <p class="muted">Система формирует индивидуальные learning tracks и рекомендации для руководителя.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="interactive-demo" class="card" style="margin-top:24px;">
+      <div class="badge">Интерактивная демонстрация</div>
+      <h2>Диагностика менеджера по продажам на типовых сценариях</h2>
+      <p class="muted">
+        Выберите демонстрационный профиль сотрудника и запустите диагностику. 
+        В демонстрации используются обезличенные тестовые профили; для пилота компетенции,
+        вопросы и шкалы адаптируются под стандарты вашей компании.
+      </p>
+
+      <div id="scenarioCards" class="scenarioGrid">
+        <button class="scenarioCard active" type="button" data-scenario="junior">
+          <strong>Новый менеджер</strong>
+          <span>Хорошая мотивация, но слабая структура продаж и CRM-дисциплина</span>
+        </button>
+        <button class="scenarioCard" type="button" data-scenario="middle">
+          <strong>Рабочий уровень</strong>
+          <span>Базовые продажи освоены, но есть пробелы в аргументации и follow-up</span>
+        </button>
+        <button class="scenarioCard" type="button" data-scenario="strong">
+          <strong>Сильный менеджер</strong>
+          <span>Высокий уровень, нужен контрольный кейс и точечная проверка</span>
+        </button>
+      </div>
+
+      <div class="demoWrap">
+        <div>
+          <h3>Карта оценок по компетенциям</h3>
+          <p class="muted">Шкала: 0 — нужен базовый трек, 1 — точечная практика, 2 — контрольный кейс.</p>
+          <div id="competencyList"></div>
+
+          <div class="actions">
+            <button class="btn primary" id="runBtn" type="button">Запустить диагностику</button>
+            <button class="btn secondary" id="resetBtn" type="button">Вернуть выбранный профиль</button>
+          </div>
+
+          <div id="demoStatus" class="demoStatus">Выберите профиль и запустите диагностику.</div>
+        </div>
+
+        <div>
+          <h3>Результат диагностики</h3>
+          <div id="summaryBox" class="resultBox muted">Здесь появится общий уровень и вывод по сотруднику.</div>
+
+          <h3>Компетенции</h3>
+          <div id="competencyResult" class="muted">Результаты появятся после запуска диагностики.</div>
+
+          <h3 style="margin-top:18px;">Индивидуальный learning track</h3>
+          <div id="trackResult" class="muted">Рекомендации появятся после запуска диагностики.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid2" style="margin-top:24px;">
+      <div class="card">
+        <h2>Варианты развития решения</h2>
+        <ul>
+          <li>Банк вопросов и кейсов под разные роли продаж</li>
+          <li>Экзамен на соответствие стандарту компании</li>
+          <li>Отчёт для руководителя и HR</li>
+          <li>Персональные learning tracks</li>
+          <li>Интеграция с LMS, HRM или корпоративным порталом</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Почему это актуально</h2>
+        <p>
+          В продажах дорого обучать всех одинаково. Компании выигрывают, когда видят,
+          кому нужен полный курс, кому достаточно практики, а кому требуется только контрольная проверка.
+        </p>
+        <div class="quote">
+          SkillPath превращает обучение из общего мероприятия в управляемую систему развития компетенций.
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      SkillPath — AI-решение для диагностики компетенций, выявления пробелов и построения индивидуальных траекторий развития.
+    </footer>
+  </main>
+
+  <script>
+    const API_URL = "https://api.azevich.ru/api/skillpath/diagnose";
+
+    const labels = {
+      basic: "Базовый трек",
+      medium: "Точечная практика",
+      advanced: "Контрольный кейс",
+      full_track: "Полная программа обучения",
+      short_track: "Короткий практический трек",
+      check_only: "Контрольная проверка"
+    };
+
+    const competencies = [
+      { id:"Выявление потребности клиента", short:"Выявление потребности" },
+      { id:"Презентация ценности продукта", short:"Презентация ценности" },
+      { id:"Работа с возражениями", short:"Работа с возражениями" },
+      { id:"CRM-дисциплина", short:"CRM-дисциплина" },
+      { id:"Финансовая аргументация", short:"Финансовая аргументация" },
+      { id:"Follow-up и сопровождение сделки", short:"Follow-up" }
+    ];
+
+    const scenarios = {
+      junior: {
+        scores: [1, 1, 0, 0, 0, 1],
+        note: "Новый менеджер: есть потенциал, но требуется базовая программа по ключевым блокам продаж."
+      },
+      middle: {
+        scores: [2, 1, 1, 2, 1, 1],
+        note: "Рабочий уровень: сотрудник справляется с базой, но нуждается в точечной практике."
+      },
+      strong: {
+        scores: [2, 2, 2, 2, 1, 2],
+        note: "Сильный менеджер: основная траектория — контрольные кейсы и точечное усиление."
+      }
+    };
+
+    let currentScenario = "junior";
+
+    const cards = document.querySelectorAll(".scenarioCard");
+    const competencyList = document.getElementById("competencyList");
+    const runBtn = document.getElementById("runBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const demoStatus = document.getElementById("demoStatus");
+    const summaryBox = document.getElementById("summaryBox");
+    const competencyResult = document.getElementById("competencyResult");
+    const trackResult = document.getElementById("trackResult");
+
+    function esc(value) {
+      return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function labelLevel(score) {
+      if (score === 0) return ["basic", "0 · базовый трек"];
+      if (score === 1) return ["medium", "1 · практика"];
+      return ["advanced", "2 · контроль"];
+    }
+
+    function setStatus(text, type="") {
+      demoStatus.className = "demoStatus" + (type ? " " + type : "");
+      demoStatus.textContent = text;
+    }
+
+    function loadScenario(key) {
+      currentScenario = key;
+      const scenario = scenarios[key];
+      cards.forEach(card => card.classList.toggle("active", card.dataset.scenario === key));
+
+      competencyList.innerHTML = competencies.map((c, idx) => {
+        const score = scenario.scores[idx];
+        const [cls, text] = labelLevel(score);
+        return `
+          <div class="competency">
+            <div>
+              <strong>${esc(c.short)}</strong>
+              <div class="muted">${esc(c.id)}</div>
+            </div>
+            <span class="levelPill ${cls}">${esc(text)}</span>
+          </div>
+        `;
+      }).join("");
+
+      summaryBox.className = "resultBox muted";
+      summaryBox.textContent = scenario.note;
+      competencyResult.className = "muted";
+      competencyResult.textContent = "Результаты появятся после запуска диагностики.";
+      trackResult.className = "muted";
+      trackResult.textContent = "Рекомендации появятся после запуска диагностики.";
+      setStatus("Профиль подготовлен. Нажмите “Запустить диагностику”.");
+    }
+
+    function levelRu(level) {
+      return labels[level] || level;
+    }
+
+    function renderCompetencies(items) {
+      if (!items || items.length === 0) {
+        competencyResult.textContent = "Компетенции не рассчитаны.";
+        return;
+      }
+
+      competencyResult.className = "";
+      competencyResult.innerHTML = items.map(item => `
+        <div class="trackItem">
+          <strong>${esc(item.competency)}</strong>
+          <div class="muted">
+            Средний балл: ${esc(item.average_score)} · 
+            уровень: ${esc(levelRu(item.level))} ·
+            режим: ${esc(levelRu(item.recommended_track_mode))}
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderTrack(items) {
+      if (!items || items.length === 0) {
+        trackResult.textContent = "Learning track не сформирован.";
+        return;
+      }
+
+      trackResult.className = "";
+      trackResult.innerHTML = items.map(item => `
+        <div class="trackItem">
+          <strong>${esc(item.competency)}</strong>
+          <div class="muted">${esc(levelRu(item.module_type))}</div>
+          <div>${esc(item.next_step)}</div>
+        </div>
+      `).join("");
+    }
+
+    async function runDiagnosis() {
+      const scenario = scenarios[currentScenario];
+
+      const payload = {
+        role: "sales_manager",
+        answers: competencies.map((c, idx) => ({
+          competency: c.id,
+          score: scenario.scores[idx]
+        }))
+      };
+
+      runBtn.disabled = true;
+      runBtn.textContent = "Диагностика...";
+      setStatus("Система рассчитывает уровень компетенций и learning track...");
+      competencyResult.textContent = "";
+      trackResult.textContent = "";
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: {"Content-Type":"application/json"},
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) throw new Error(data.detail || "Ошибка API");
+
+        summaryBox.className = "resultBox";
+        summaryBox.innerHTML = `
+          <strong>Общий уровень: ${esc(levelRu(data.overall_level))}</strong>
+          <div class="metric">
+            <div><strong>${esc(data.overall_score)}</strong><br><span class="muted">средний балл</span></div>
+            <div><strong>${esc(data.role)}</strong><br><span class="muted">роль диагностики</span></div>
+          </div>
+          <div class="muted">Результат показывает, какие компетенции требуют обучения, практики или контрольного кейса.</div>
+        `;
+
+        renderCompetencies(data.competencies);
+        renderTrack(data.learning_track);
+        setStatus("Диагностика завершена. Сформированы компетенции и learning track.", "ok");
+      } catch (e) {
+        summaryBox.className = "resultBox muted";
+        summaryBox.textContent = "Сервис временно недоступен. Попробуйте повторить запрос позже.";
+        setStatus("Не удалось выполнить диагностику: " + e.message, "err");
+      } finally {
+        runBtn.disabled = false;
+        runBtn.textContent = "Запустить диагностику";
+      }
+    }
+
+    cards.forEach(card => card.addEventListener("click", () => loadScenario(card.dataset.scenario)));
+    resetBtn.addEventListener("click", () => loadScenario(currentScenario));
+    runBtn.addEventListener("click", runDiagnosis);
+
+    loadScenario("junior");
+  </script>
+</body>
+</html>
