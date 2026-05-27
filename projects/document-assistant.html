@@ -3,62 +3,128 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Document Assistant — AI-ассистент по документам</title>
+  <title>Document Assistant — AI-ассистент по документам компании</title>
   <style>
-    :root{
-      --bg:#f5f7fb;--card:#fff;--text:#111827;--muted:#6b7280;
-      --blue:#2563eb;--blue2:#1d4ed8;--border:#e5e7eb;
-      --ok:#065f46;--okbg:#ecfdf5;--warn:#92400e;--warnbg:#fffbeb;--err:#991b1b;--errbg:#fef2f2;
+    :root {
+      --bg:#f6f8fc; --card:#ffffff; --text:#101828; --muted:#667085;
+      --blue:#2563eb; --blue2:#1d4ed8; --line:#e5e7eb; --soft:#eff6ff;
+      --green:#067647; --greenbg:#ecfdf3;
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
-      color:var(--text);background:radial-gradient(circle at top left,#dbeafe 0,transparent 360px),var(--bg);
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      background: radial-gradient(circle at top left, #dbeafe 0, transparent 360px), var(--bg);
+      color:var(--text);
       line-height:1.55;
     }
-    .page{width:min(1120px,calc(100% - 32px));margin:0 auto;padding:28px 0 54px}
-    .top{display:flex;justify-content:space-between;gap:18px;align-items:center;margin-bottom:26px}
-    .brand{font-weight:900;letter-spacing:-.03em}
-    .nav{display:flex;gap:14px;flex-wrap:wrap;font-size:14px}
-    a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline}
-    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;margin-bottom:22px}
-    .card{background:rgba(255,255,255,.94);border:1px solid var(--border);border-radius:24px;padding:26px;box-shadow:0 18px 45px rgba(15,23,42,.08)}
-    .badge{display:inline-block;background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe;border-radius:999px;padding:7px 12px;font-size:13px;font-weight:800;margin-bottom:14px}
-    h1{font-size:clamp(34px,5vw,56px);line-height:1.02;margin:0 0 14px;letter-spacing:-.055em}
-    h2{margin:0 0 14px;font-size:24px;letter-spacing:-.03em}
-    h3{margin:18px 0 8px;font-size:17px}
-    p{margin:0 0 12px}.lead{font-size:18px;color:#374151}.muted{color:var(--muted)}.small{font-size:13px;color:var(--muted)}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:22px}
-    .demo{display:grid;grid-template-columns:minmax(0,1fr) minmax(330px,.85fr);gap:20px;align-items:start}
-    label{display:block;font-weight:850;margin:0 0 8px}
-    input,textarea{
-      width:100%;border:1px solid #d1d5db;border-radius:16px;padding:13px 14px;
-      font:inherit;background:#fff;color:var(--text);outline:none;
+    .page { width:min(1120px, calc(100% - 32px)); margin:0 auto; padding:28px 0 56px; }
+    .top { display:flex; justify-content:space-between; align-items:center; gap:18px; margin-bottom:34px; }
+    .brand { font-weight:900; letter-spacing:-.03em; }
+    .nav { display:flex; gap:14px; flex-wrap:wrap; font-size:14px; }
+    a { color:var(--blue); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    .hero {
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:24px;
+      align-items:stretch;
+      margin-bottom:24px;
     }
-    textarea{min-height:275px;resize:vertical}
-    input:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(37,99,235,.12)}
-    .field{margin-bottom:15px}
-    .buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-    button{border:0;border-radius:15px;padding:12px 16px;font:inherit;font-weight:850;cursor:pointer}
-    button:disabled{opacity:.65;cursor:wait}
-    .primary{background:var(--blue);color:white}.primary:hover{background:var(--blue2)}
-    .secondary{background:#eef2ff;color:#3730a3}.ghost{background:#f3f4f6;color:#374151}
-    .status{margin-top:14px;padding:12px 14px;border-radius:15px;background:#f8fafc;border:1px solid var(--border);font-size:14px}
-    .status.ok{background:var(--okbg);border-color:#a7f3d0;color:var(--ok)}
-    .status.warn{background:var(--warnbg);border-color:#fde68a;color:var(--warn)}
-    .status.err{background:var(--errbg);border-color:#fecaca;color:var(--err)}
-    .answer{padding:15px;border-radius:18px;background:#f8fafc;border:1px solid var(--border);white-space:pre-wrap}
-    .source{padding:14px;border:1px solid var(--border);border-radius:16px;background:white;margin-top:12px}
-    .sourceTop{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-bottom:8px}
-    .score{font-weight:900;color:var(--blue)}
-    .terms,.keywords{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
-    .term{background:#eff6ff;color:#1e40af;border-radius:999px;padding:3px 8px;font-size:12px;font-weight:800}
-    .keyword{background:#f3f4f6;color:#374151;border-radius:999px;padding:6px 9px;font-size:13px}
-    details{margin-top:16px;border:1px solid var(--border);border-radius:16px;padding:12px 14px;background:white}
-    summary{cursor:pointer;font-weight:850}
-    pre{overflow:auto;white-space:pre-wrap;word-break:break-word;background:#0f172a;color:#e5e7eb;padding:14px;border-radius:14px;font-size:12px}
-    .footer{margin-top:28px;border-top:1px solid var(--border);padding-top:18px;color:var(--muted);font-size:14px}
-    @media(max-width:860px){.hero,.grid,.demo{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}.card{padding:20px}}
+    .card {
+      background:rgba(255,255,255,.94);
+      border:1px solid var(--line);
+      border-radius:26px;
+      padding:28px;
+      box-shadow:0 18px 45px rgba(15,23,42,.08);
+    }
+    .badge {
+      display:inline-flex;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--soft);
+      border:1px solid #bfdbfe;
+      color:#1e40af;
+      font-size:13px;
+      font-weight:800;
+      margin-bottom:16px;
+    }
+    h1 {
+      font-size:clamp(36px,5vw,60px);
+      line-height:1.02;
+      letter-spacing:-.06em;
+      margin:0 0 16px;
+    }
+    h2 { margin:0 0 14px; font-size:25px; letter-spacing:-.03em; }
+    h3 { margin:0 0 7px; font-size:17px; }
+    p { margin:0 0 12px; }
+    .lead { font-size:19px; color:#344054; max-width:760px; }
+    .muted { color:var(--muted); }
+    .grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; margin-bottom:24px; }
+    .two { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:24px; }
+    .item {
+      padding:18px;
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:#fff;
+    }
+    .num {
+      width:34px; height:34px;
+      display:grid; place-items:center;
+      border-radius:12px;
+      background:#dbeafe;
+      color:#1d4ed8;
+      font-weight:900;
+      margin-bottom:12px;
+    }
+    ul { margin:10px 0 0; padding-left:20px; color:#344054; }
+    li { margin:7px 0; }
+    .status {
+      padding:14px 16px;
+      border-radius:18px;
+      background:var(--greenbg);
+      color:var(--green);
+      border:1px solid #abefc6;
+      font-weight:700;
+    }
+    .cta {
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:20px;
+    }
+    .btn {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:13px 17px;
+      border-radius:15px;
+      font-weight:850;
+      text-decoration:none;
+    }
+    .primary { background:var(--blue); color:white; }
+    .primary:hover { background:var(--blue2); text-decoration:none; }
+    .secondary { background:#eef2ff; color:#3730a3; }
+    .quote {
+      border-left:4px solid var(--blue);
+      padding:14px 16px;
+      background:#f8fafc;
+      border-radius:14px;
+      color:#344054;
+      margin-top:14px;
+    }
+    .footer {
+      margin-top:26px;
+      padding-top:18px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-size:14px;
+    }
+    @media(max-width:900px){
+      .hero,.grid,.two{grid-template-columns:1fr}
+      .top{align-items:flex-start;flex-direction:column}
+      .card{padding:22px}
+    }
   </style>
 </head>
 <body>
@@ -75,281 +141,135 @@
 
     <section class="hero">
       <div class="card">
-        <div class="badge">Live demo · Document Assistant v0.1</div>
+        <div class="badge">B2B AI demo · Document Assistant</div>
         <h1>AI-ассистент по документам компании</h1>
         <p class="lead">
-          Демо помогает быстро находить ответы в регламентах, инструкциях, FAQ и базе знаний:
-          документ → поиск релевантных фрагментов → ответ → источники.
+          Решение помогает сотрудникам быстро находить ответы в регламентах,
+          инструкциях, FAQ, базе знаний и внутренних документах компании.
         </p>
         <p class="muted">
-          Первая версия работает стабильно сама по себе: без зависимости от Google AI Studio,
-          без внешнего LLM и без векторной базы. Это автономный демонстрационный слой,
-          который можно показывать заказчику.
+          Вместо ручного поиска по десяткам файлов сотрудник задаёт вопрос обычным языком,
+          а система находит релевантные фрагменты, формирует краткий ответ и показывает источник.
         </p>
+        <div class="cta">
+          <a class="btn primary" href="https://api.azevich.ru/docs" target="_blank" rel="noreferrer">Открыть API demo</a>
+          <a class="btn secondary" href="../index.html">Вернуться к портфолио</a>
+        </div>
       </div>
 
       <aside class="card">
         <h2>Бизнес-задача</h2>
         <p>
-          Снизить нагрузку на поддержку, HR, обучение и руководителей: сотрудник задаёт вопрос
-          обычным языком и получает ответ с найденными фрагментами документа.
+          Снизить нагрузку на поддержку, HR, обучение и руководителей за счёт быстрого поиска
+          ответов в корпоративных документах.
         </p>
-        <h2>AI-часть</h2>
-        <p class="muted">
-          Нарезка текста на фрагменты, поиск релевантного контекста, формирование ответа,
-          ключевые слова и ссылки на найденные источники.
-        </p>
-        <div class="status ok">Backend: https://api.azevich.ru/api/document/analyze</div>
+        <div class="status">
+          Статус: подготовлен демонстрационный backend v0.1 и презентационная страница для показа идеи.
+        </div>
+        <div class="quote">
+          Главная ценность: не просто “чат с ИИ”, а объяснимый поиск по документам
+          с опорой на конкретные найденные фрагменты.
+        </div>
       </aside>
     </section>
 
     <section class="grid">
-      <div class="card">
-        <h2>Что показывает демо</h2>
-        <p>
-          Это публичная облегчённая версия корпоративного Document Assistant:
-          текст документа или TXT/MD-файл → вопрос → найденные фрагменты → ответ.
-        </p>
+      <div class="item">
+        <div class="num">1</div>
+        <h3>Поиск по документам</h3>
+        <p class="muted">Регламенты, инструкции, FAQ, обучающие материалы, база знаний.</p>
       </div>
-      <div class="card">
-        <h2>Что можно добавить в полном MVP</h2>
-        <p class="muted">
-          PDF/DOCX-загрузка, индексирование базы документов, права доступа, история вопросов,
-          embeddings, Gemini/LLM-слой, интеграция с CRM, Helpdesk или обучающей платформой.
-        </p>
+      <div class="item">
+        <div class="num">2</div>
+        <h3>Ответ с источниками</h3>
+        <p class="muted">Система показывает не только ответ, но и фрагменты, на которых он основан.</p>
+      </div>
+      <div class="item">
+        <div class="num">3</div>
+        <h3>Быстрый пилот</h3>
+        <p class="muted">Можно начать с небольшой базы документов и постепенно расширять решение.</p>
       </div>
     </section>
 
-    <section class="card demo">
-      <div>
-        <h2>Проверить демо</h2>
-
-        <div class="field">
-          <label for="fileInput">Загрузить TXT/Markdown-файл</label>
-          <input id="fileInput" type="file" accept=".txt,.md,.markdown,text/plain,text/markdown" />
-          <div class="small">PDF/DOCX будут добавлены в следующей версии. Сейчас можно вставить текст вручную.</div>
-        </div>
-
-        <div class="field">
-          <label for="title">Название документа</label>
-          <input id="title" value="Тестовый регламент" />
-        </div>
-
-        <div class="field">
-          <label for="documentText">Текст документа</label>
-          <textarea id="documentText">Для оформления заявки сотрудник должен заполнить форму, приложить копию документа и отправить обращение руководителю отдела.
-
-Срок рассмотрения заявки составляет до 3 рабочих дней.
-
-Если заявка заполнена неверно, сотрудник должен исправить ошибки и отправить форму повторно.
-
-Ответственный руководитель проверяет корректность заявки и принимает решение по обращению.</textarea>
-        </div>
-
-        <div class="field">
-          <label for="question">Вопрос по документу</label>
-          <input id="question" value="Какие документы нужны для оформления заявки?" />
-        </div>
-
-        <div class="buttons">
-          <button class="primary" id="askBtn">Найти ответ</button>
-          <button class="secondary" id="sampleBtn">Вставить пример FAQ</button>
-          <button class="ghost" id="clearBtn">Очистить</button>
-        </div>
-
-        <div id="status" class="status">Готово к проверке. Вставьте документ и задайте вопрос.</div>
+    <section class="two">
+      <div class="card">
+        <h2>Кому полезно</h2>
+        <ul>
+          <li>Служба поддержки и helpdesk</li>
+          <li>HR и обучение сотрудников</li>
+          <li>Отдел качества и регламентов</li>
+          <li>Юридический и договорной блок</li>
+          <li>Руководители подразделений</li>
+          <li>Внутренние базы знаний и FAQ</li>
+        </ul>
       </div>
 
-      <div>
-        <h2>Результат</h2>
+      <div class="card">
+        <h2>Что делает AI-часть</h2>
+        <ul>
+          <li>Извлекает текст из документов</li>
+          <li>Разбивает документ на смысловые фрагменты</li>
+          <li>Ищет релевантный контекст по вопросу</li>
+          <li>Формирует краткий ответ</li>
+          <li>Показывает найденные источники</li>
+          <li>Может подключаться к внешним LLM API как дополнительный слой</li>
+        </ul>
+      </div>
+    </section>
 
-        <h3>Ответ</h3>
-        <div id="answer" class="answer muted">Здесь появится ответ по документу.</div>
+    <section class="card">
+      <h2>Как может выглядеть внедрение</h2>
+      <div class="grid" style="margin-bottom:0;">
+        <div class="item">
+          <h3>Этап 1 — пилот</h3>
+          <p class="muted">
+            Берём 20–100 документов, собираем прототип поиска и проверяем типовые вопросы сотрудников.
+          </p>
+        </div>
+        <div class="item">
+          <h3>Этап 2 — MVP</h3>
+          <p class="muted">
+            Добавляем загрузку PDF/DOCX, индекс, обновление базы, журнал вопросов и улучшенные ответы.
+          </p>
+        </div>
+        <div class="item">
+          <h3>Этап 3 — интеграция</h3>
+          <p class="muted">
+            Подключаем права доступа, внутренние системы, CRM/helpdesk или корпоративный портал.
+          </p>
+        </div>
+      </div>
+    </section>
 
-        <div id="statsBox" class="status" style="display:none;"></div>
+    <section class="two" style="margin-top:24px;">
+      <div class="card">
+        <h2>Демо-архитектура</h2>
+        <ul>
+          <li>Frontend: GitHub Pages / azevich.ru</li>
+          <li>Backend: FastAPI / api.azevich.ru</li>
+          <li>Режим v0.1: локальный поиск фрагментов без зависимости от Google AI Studio</li>
+          <li>Опционально: Gemini, OpenRouter, NVIDIA NIM или другой LLM provider</li>
+        </ul>
+      </div>
 
-        <h3>Найденные источники</h3>
-        <div id="sources" class="muted">Пока источники не найдены.</div>
-
-        <h3>Ключевые слова</h3>
-        <div id="keywords" class="keywords"></div>
-
-        <details>
-          <summary>Технический ответ backend</summary>
-          <pre id="jsonOutput">{}</pre>
-        </details>
+      <div class="card">
+        <h2>Что можно показать заказчику</h2>
+        <p>
+          Эта страница показывает идею, бизнес-ценность и архитектуру решения. Для технической демонстрации
+          уже подготовлен API endpoint, который принимает текст документа и вопрос, возвращает ответ,
+          найденные фрагменты, ключевые слова и статистику.
+        </p>
+        <div class="quote">
+          Промышленная версия может работать с закрытой базой документов компании,
+          правами доступа, регулярным обновлением индекса и журналом обращений.
+        </div>
       </div>
     </section>
 
     <footer class="footer">
-      Document Assistant v0.1 — автономное демо без зависимости от Google AI Studio.
-      Gemini/LLM можно подключить позже как дополнительный слой генерации ответа.
+      Document Assistant — демонстрационный B2B-кейс в портфолио AI-проектов.
+      Цель страницы: понятно показать бизнес-проблему, подход к решению и потенциал внедрения.
     </footer>
   </main>
-
-  <script>
-    const API_URL = "https://api.azevich.ru/api/document/analyze";
-
-    const fileInput = document.getElementById("fileInput");
-    const titleEl = document.getElementById("title");
-    const textEl = document.getElementById("documentText");
-    const questionEl = document.getElementById("question");
-    const askBtn = document.getElementById("askBtn");
-    const sampleBtn = document.getElementById("sampleBtn");
-    const clearBtn = document.getElementById("clearBtn");
-    const statusEl = document.getElementById("status");
-    const answerEl = document.getElementById("answer");
-    const sourcesEl = document.getElementById("sources");
-    const keywordsEl = document.getElementById("keywords");
-    const jsonOutput = document.getElementById("jsonOutput");
-    const statsBox = document.getElementById("statsBox");
-
-    function setStatus(message, type="") {
-      statusEl.className = "status" + (type ? " " + type : "");
-      statusEl.textContent = message;
-    }
-
-    function esc(value) {
-      return String(value ?? "")
-        .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;").replaceAll("'","&#039;");
-    }
-
-    function renderSources(chunks) {
-      if (!chunks || chunks.length === 0) {
-        sourcesEl.className = "muted";
-        sourcesEl.textContent = "Релевантные фрагменты не найдены. Попробуйте уточнить вопрос.";
-        return;
-      }
-      sourcesEl.className = "";
-      sourcesEl.innerHTML = chunks.map((chunk, idx) => {
-        const terms = (chunk.matched_terms || []).map(t => `<span class="term">${esc(t)}</span>`).join("");
-        return `
-          <div class="source">
-            <div class="sourceTop">
-              <span>Источник ${idx + 1}: ${esc(chunk.source || "Документ")}</span>
-              <span class="score">score: ${esc(chunk.score)}</span>
-            </div>
-            ${terms ? `<div class="terms">${terms}</div>` : ""}
-            <div>${esc(chunk.text)}</div>
-            <div class="small" style="margin-top:8px;">chunk_id: ${esc(chunk.chunk_id)} · chars: ${esc(chunk.start_char)}–${esc(chunk.end_char)}</div>
-          </div>
-        `;
-      }).join("");
-    }
-
-    function renderKeywords(keywords) {
-      if (!keywords || keywords.length === 0) {
-        keywordsEl.innerHTML = '<span class="small">Ключевые слова не найдены.</span>';
-        return;
-      }
-      keywordsEl.innerHTML = keywords.map(k => `<span class="keyword">${esc(k.word)} · ${esc(k.count)}</span>`).join("");
-    }
-
-    function renderStats(stats) {
-      if (!stats) {
-        statsBox.style.display = "none";
-        return;
-      }
-      statsBox.style.display = "block";
-      statsBox.innerHTML =
-        `Символов: <strong>${esc(stats.characters)}</strong> · ` +
-        `слов: <strong>${esc(stats.words)}</strong> · ` +
-        `фрагментов: <strong>${esc(stats.chunks_total)}</strong> · ` +
-        `найдено: <strong>${esc(stats.chunks_returned)}</strong>`;
-    }
-
-    async function askDocument() {
-      const payload = {
-        title: titleEl.value.trim() || "Untitled document",
-        text: textEl.value.trim(),
-        question: questionEl.value.trim() || "Кратко объясни содержание документа",
-        max_chunks: 5
-      };
-
-      if (payload.text.length < 20) {
-        setStatus("Текст документа слишком короткий. Вставьте хотя бы 20 символов.", "warn");
-        return;
-      }
-
-      askBtn.disabled = true;
-      askBtn.textContent = "Ищу ответ...";
-      setStatus("Отправляем документ в backend и ищем релевантные фрагменты...");
-      answerEl.textContent = "Обработка...";
-      sourcesEl.textContent = "";
-      keywordsEl.innerHTML = "";
-      jsonOutput.textContent = "{}";
-
-      try {
-        const response = await fetch(API_URL, {
-          method: "POST",
-          headers: {"Content-Type":"application/json"},
-          body: JSON.stringify(payload)
-        });
-
-        const data = await response.json();
-        jsonOutput.textContent = JSON.stringify(data, null, 2);
-
-        if (!response.ok) throw new Error(data.detail || "Backend returned error");
-
-        answerEl.className = "answer";
-        answerEl.textContent = data.answer || "Ответ не сформирован.";
-        renderSources(data.matched_chunks);
-        renderKeywords(data.keywords);
-        renderStats(data.stats);
-
-        if (data.status === "ok") setStatus("Готово: ответ найден, источники показаны ниже.", "ok");
-        else setStatus("Ответ требует уточнения вопроса: релевантность низкая.", "warn");
-      } catch (e) {
-        answerEl.className = "answer muted";
-        answerEl.textContent = "Не удалось получить ответ от backend.";
-        setStatus("Ошибка: " + e.message, "err");
-      } finally {
-        askBtn.disabled = false;
-        askBtn.textContent = "Найти ответ";
-      }
-    }
-
-    fileInput.addEventListener("change", async () => {
-      const file = fileInput.files && fileInput.files[0];
-      if (!file) return;
-      titleEl.value = file.name;
-      const text = await file.text();
-      textEl.value = text;
-      setStatus("Файл загружен локально в браузере. Нажмите “Найти ответ”.", "ok");
-    });
-
-    sampleBtn.addEventListener("click", () => {
-      titleEl.value = "FAQ службы поддержки";
-      textEl.value = `Сотрудник может обратиться в службу поддержки через внутренний портал или по электронной почте.
-
-Для оформления заявки нужно указать тему обращения, описание проблемы, подразделение и контактные данные.
-
-Если обращение связано с доступом к системе, необходимо приложить согласование руководителя.
-
-Срок первичного ответа службы поддержки составляет один рабочий день. Срочные инциденты обрабатываются в приоритетном порядке.
-
-После решения вопроса заявка закрывается, а сотрудник получает уведомление.`;
-      questionEl.value = "Что нужно указать при обращении в службу поддержки?";
-      setStatus("Пример FAQ вставлен. Нажмите “Найти ответ”.");
-    });
-
-    clearBtn.addEventListener("click", () => {
-      titleEl.value = "";
-      textEl.value = "";
-      questionEl.value = "";
-      fileInput.value = "";
-      answerEl.className = "answer muted";
-      answerEl.textContent = "Здесь появится ответ по документу.";
-      sourcesEl.className = "muted";
-      sourcesEl.textContent = "Пока источники не найдены.";
-      keywordsEl.innerHTML = "";
-      statsBox.style.display = "none";
-      jsonOutput.textContent = "{}";
-      setStatus("Поля очищены.");
-    });
-
-    askBtn.addEventListener("click", askDocument);
-  </script>
 </body>
 </html>
