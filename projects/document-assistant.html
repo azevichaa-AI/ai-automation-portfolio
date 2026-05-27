@@ -120,8 +120,98 @@
       color:var(--muted);
       font-size:14px;
     }
+
+    .demoBox {
+      margin-top:24px;
+      display:grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, .9fr);
+      gap:18px;
+      align-items:start;
+    }
+    label { display:block; font-weight:850; margin:0 0 8px; }
+    input, textarea {
+      width:100%;
+      border:1px solid #d1d5db;
+      border-radius:16px;
+      padding:13px 14px;
+      font:inherit;
+      background:#fff;
+      color:var(--text);
+      outline:none;
+    }
+    textarea { min-height:220px; resize:vertical; }
+    input:focus, textarea:focus {
+      border-color:var(--blue);
+      box-shadow:0 0 0 4px rgba(37,99,235,.12);
+    }
+    .field { margin-bottom:14px; }
+    .buttons { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+    button {
+      border:0;
+      border-radius:15px;
+      padding:12px 16px;
+      font:inherit;
+      font-weight:850;
+      cursor:pointer;
+    }
+    button:disabled { opacity:.65; cursor:wait; }
+    .primaryBtn { background:var(--blue); color:white; }
+    .secondaryBtn { background:#eef2ff; color:#3730a3; }
+    .answerBox {
+      padding:15px;
+      border-radius:18px;
+      background:#f8fafc;
+      border:1px solid var(--line);
+      white-space:pre-wrap;
+    }
+    .sourceBox {
+      padding:14px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:#fff;
+      margin-top:12px;
+    }
+    .sourceTop {
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:8px;
+    }
+    .score { font-weight:900; color:var(--blue); }
+    .chips { display:flex; gap:7px; flex-wrap:wrap; margin-top:8px; }
+    .chip {
+      background:#eff6ff;
+      color:#1e40af;
+      border-radius:999px;
+      padding:4px 8px;
+      font-size:12px;
+      font-weight:800;
+    }
+    .demoStatus {
+      margin-top:14px;
+      padding:12px 14px;
+      border-radius:15px;
+      background:#f8fafc;
+      border:1px solid var(--line);
+      color:#344054;
+      font-size:14px;
+    }
+    .demoStatus.ok {
+      background:#ecfdf3;
+      border-color:#abefc6;
+      color:#067647;
+    }
+    .demoStatus.err {
+      background:#fef2f2;
+      border-color:#fecaca;
+      color:#991b1b;
+    }
+
     @media(max-width:900px){
-      .hero,.grid,.two{grid-template-columns:1fr}
+      .hero,.grid,.two,.demoBox{grid-template-columns:1fr}
       .top{align-items:flex-start;flex-direction:column}
       .card{padding:22px}
     }
@@ -266,10 +356,186 @@
       </div>
     </section>
 
+
+    <section id="simple-demo" class="card" style="margin-top:24px;">
+      <div class="badge">Простой demo-вариант</div>
+      <h2>Попробовать ассистента на коротком регламенте</h2>
+      <p class="muted">
+        Это мини-демо показывает базовую механику: текст документа → вопрос → найденные фрагменты → ответ.
+        Оно работает через backend <strong>api.azevich.ru</strong> и не зависит от Google AI Studio.
+      </p>
+
+      <div class="demoBox">
+        <div>
+          <div class="field">
+            <label for="demoTitle">Название документа</label>
+            <input id="demoTitle" value="Тестовый регламент" />
+          </div>
+
+          <div class="field">
+            <label for="demoText">Текст документа</label>
+            <textarea id="demoText">Для оформления заявки сотрудник должен заполнить форму, приложить копию документа и отправить обращение руководителю отдела.
+
+Срок рассмотрения заявки составляет до 3 рабочих дней.
+
+Если заявка заполнена неверно, сотрудник должен исправить ошибки и отправить форму повторно.
+
+Ответственный руководитель проверяет корректность заявки и принимает решение по обращению.</textarea>
+          </div>
+
+          <div class="field">
+            <label for="demoQuestion">Вопрос</label>
+            <input id="demoQuestion" value="Какие документы нужны для оформления заявки?" />
+          </div>
+
+          <div class="buttons">
+            <button class="primaryBtn" id="demoAskBtn" type="button">Найти ответ</button>
+            <button class="secondaryBtn" id="demoSampleBtn" type="button">Вставить пример FAQ</button>
+          </div>
+
+          <div id="demoStatus" class="demoStatus">Готово к проверке.</div>
+        </div>
+
+        <div>
+          <h3>Ответ</h3>
+          <div id="demoAnswer" class="answerBox muted">Здесь появится ответ по документу.</div>
+
+          <h3 style="margin-top:18px;">Найденные источники</h3>
+          <div id="demoSources" class="muted">Пока источники не найдены.</div>
+
+          <h3 style="margin-top:18px;">Ключевые слова</h3>
+          <div id="demoKeywords" class="chips"></div>
+        </div>
+      </div>
+    </section>
+
     <footer class="footer">
       Document Assistant — демонстрационный B2B-кейс в портфолио AI-проектов.
       Цель страницы: понятно показать бизнес-проблему, подход к решению и потенциал внедрения.
     </footer>
   </main>
+
+  <script>
+    const DOC_API_URL = "https://api.azevich.ru/api/document/analyze";
+
+    const demoTitle = document.getElementById("demoTitle");
+    const demoText = document.getElementById("demoText");
+    const demoQuestion = document.getElementById("demoQuestion");
+    const demoAskBtn = document.getElementById("demoAskBtn");
+    const demoSampleBtn = document.getElementById("demoSampleBtn");
+    const demoStatus = document.getElementById("demoStatus");
+    const demoAnswer = document.getElementById("demoAnswer");
+    const demoSources = document.getElementById("demoSources");
+    const demoKeywords = document.getElementById("demoKeywords");
+
+    function esc(value) {
+      return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function setDemoStatus(text, type="") {
+      demoStatus.className = "demoStatus" + (type ? " " + type : "");
+      demoStatus.textContent = text;
+    }
+
+    function renderDemoSources(chunks) {
+      if (!chunks || chunks.length === 0) {
+        demoSources.className = "muted";
+        demoSources.textContent = "Релевантные фрагменты не найдены. Попробуйте уточнить вопрос.";
+        return;
+      }
+
+      demoSources.className = "";
+      demoSources.innerHTML = chunks.map((chunk, idx) => `
+        <div class="sourceBox">
+          <div class="sourceTop">
+            <span>Источник ${idx + 1}: ${esc(chunk.source || "Документ")}</span>
+            <span class="score">score: ${esc(chunk.score)}</span>
+          </div>
+          <div>${esc(chunk.text)}</div>
+        </div>
+      `).join("");
+    }
+
+    function renderDemoKeywords(keywords) {
+      if (!keywords || keywords.length === 0) {
+        demoKeywords.innerHTML = '<span class="muted">Ключевые слова не найдены.</span>';
+        return;
+      }
+      demoKeywords.innerHTML = keywords
+        .slice(0, 10)
+        .map(k => `<span class="chip">${esc(k.word)} · ${esc(k.count)}</span>`)
+        .join("");
+    }
+
+    async function askDemoDocument() {
+      const payload = {
+        title: demoTitle.value.trim() || "Untitled document",
+        text: demoText.value.trim(),
+        question: demoQuestion.value.trim() || "Кратко объясни содержание документа",
+        max_chunks: 5
+      };
+
+      if (payload.text.length < 20) {
+        setDemoStatus("Текст слишком короткий. Добавьте больше содержания.", "err");
+        return;
+      }
+
+      demoAskBtn.disabled = true;
+      demoAskBtn.textContent = "Ищу...";
+      setDemoStatus("Отправляем запрос в backend...");
+      demoAnswer.textContent = "Обработка...";
+      demoSources.textContent = "";
+      demoKeywords.innerHTML = "";
+
+      try {
+        const response = await fetch(DOC_API_URL, {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.detail || "Backend returned error");
+        }
+
+        demoAnswer.className = "answerBox";
+        demoAnswer.textContent = data.answer || "Ответ не сформирован.";
+        renderDemoSources(data.matched_chunks);
+        renderDemoKeywords(data.keywords);
+
+        setDemoStatus("Готово: ответ и источники получены.", "ok");
+      } catch (e) {
+        demoAnswer.className = "answerBox muted";
+        demoAnswer.textContent = "Не удалось получить ответ от backend.";
+        setDemoStatus("Ошибка: " + e.message, "err");
+      } finally {
+        demoAskBtn.disabled = false;
+        demoAskBtn.textContent = "Найти ответ";
+      }
+    }
+
+    demoAskBtn.addEventListener("click", askDemoDocument);
+
+    demoSampleBtn.addEventListener("click", () => {
+      demoTitle.value = "FAQ службы поддержки";
+      demoText.value = `Сотрудник может обратиться в службу поддержки через внутренний портал или по электронной почте.
+
+Для оформления заявки нужно указать тему обращения, описание проблемы, подразделение и контактные данные.
+
+Если обращение связано с доступом к системе, необходимо приложить согласование руководителя.
+
+Срок первичного ответа службы поддержки составляет один рабочий день. Срочные инциденты обрабатываются в приоритетном порядке.`;
+      demoQuestion.value = "Что нужно указать при обращении в службу поддержки?";
+      setDemoStatus("Пример FAQ вставлен. Нажмите “Найти ответ”.");
+    });
+  </script>
+
 </body>
 </html>
