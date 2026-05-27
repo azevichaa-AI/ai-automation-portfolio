@@ -121,6 +121,44 @@
       font-size:14px;
     }
 
+
+    .scenarioGrid {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin:18px 0 22px;
+    }
+    .scenarioCard {
+      text-align:left;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--text);
+      border-radius:18px;
+      padding:15px;
+      cursor:pointer;
+      box-shadow:0 8px 22px rgba(15,23,42,.04);
+    }
+    .scenarioCard:hover {
+      border-color:#93c5fd;
+      background:#f8fbff;
+    }
+    .scenarioCard.active {
+      border-color:var(--blue);
+      background:#eff6ff;
+      box-shadow:0 0 0 4px rgba(37,99,235,.10);
+    }
+    .scenarioCard strong {
+      display:block;
+      font-size:15px;
+      margin-bottom:5px;
+    }
+    .scenarioCard span {
+      display:block;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.35;
+    }
+
     .demoBox {
       margin-top:24px;
       display:grid;
@@ -365,6 +403,22 @@
         Выберите демонстрационный сценарий, задайте вопрос и получите ответ с найденными источниками. В этой демонстрации используются обезличенные тестовые документы; для пилотного запуска можно подключить реальные регламенты, инструкции, FAQ и базу знаний вашей компании.
       </p>
 
+
+      <div id="scenarioCards" class="scenarioGrid" aria-label="Выбор демонстрационного сценария">
+        <button class="scenarioCard active" type="button" data-scenario="request">
+          <strong>Регламент заявок</strong>
+          <span>Как сотрудник оформляет внутреннее обращение</span>
+        </button>
+        <button class="scenarioCard" type="button" data-scenario="support">
+          <strong>FAQ поддержки</strong>
+          <span>Что указывать при обращении в helpdesk</span>
+        </button>
+        <button class="scenarioCard" type="button" data-scenario="onboarding">
+          <strong>Адаптация сотрудника</strong>
+          <span>Первый рабочий день, наставник и обучение</span>
+        </button>
+      </div>
+
       <div class="demoBox">
         <div>
           <div class="field">
@@ -534,6 +588,69 @@
       demoQuestion.value = "Что нужно указать при обращении в службу поддержки?";
       setDemoStatus("Пример FAQ вставлен. Нажмите “Найти ответ”.");
     });
+  </script>
+
+
+  <script>
+    (function () {
+      const scenarioData = {
+        request: {
+          title: "Регламент обработки заявок сотрудников",
+          text: `Для оформления внутренней заявки сотрудник должен заполнить электронную форму, указать тему обращения, подразделение и контактные данные.
+
+Если заявка связана с доступом к корпоративной системе, необходимо приложить согласование руководителя.
+
+Срок первичного рассмотрения заявки составляет до 3 рабочих дней. Если заявка заполнена неверно, сотрудник получает уведомление и должен исправить ошибки.
+
+Ответственный руководитель проверяет корректность заявки, принимает решение и передаёт её в профильный отдел для исполнения.`,
+          question: "Какие данные нужны для оформления заявки?"
+        },
+        support: {
+          title: "FAQ службы поддержки",
+          text: `Сотрудник может обратиться в службу поддержки через внутренний портал или по электронной почте.
+
+Для оформления обращения нужно указать тему, описание проблемы, подразделение, контактные данные и желаемый срок решения.
+
+Срочные инциденты, влияющие на работу отдела или клиента, обрабатываются в приоритетном порядке.
+
+После решения вопроса заявка закрывается, а сотрудник получает уведомление с кратким описанием выполненных действий.`,
+          question: "Что нужно указать при обращении в поддержку?"
+        },
+        onboarding: {
+          title: "Инструкция по адаптации нового сотрудника",
+          text: `В первый рабочий день новый сотрудник получает доступ к корпоративной почте, внутреннему порталу и базовым инструкциям.
+
+Руководитель назначает наставника, который помогает разобраться с процессами, задачами и стандартами коммуникации.
+
+В течение первой недели сотрудник проходит вводное обучение, знакомится с регламентами отдела и выполняет первые практические задания.
+
+По итогам испытательного периода руководитель оценивает прогресс сотрудника и определяет дальнейший план развития.`,
+          question: "Что получает сотрудник в первый рабочий день?"
+        }
+      };
+
+      const cards = document.querySelectorAll("#scenarioCards .scenarioCard");
+      const titleEl = document.getElementById("demoTitle") || document.getElementById("title");
+      const textEl = document.getElementById("demoText") || document.getElementById("documentText");
+      const questionEl = document.getElementById("demoQuestion") || document.getElementById("question");
+
+      function loadScenario(key) {
+        const item = scenarioData[key] || scenarioData.request;
+        if (titleEl) titleEl.value = item.title;
+        if (textEl) textEl.value = item.text;
+        if (questionEl) questionEl.value = item.question;
+
+        cards.forEach(card => {
+          card.classList.toggle("active", card.dataset.scenario === key);
+        });
+      }
+
+      cards.forEach(card => {
+        card.addEventListener("click", () => loadScenario(card.dataset.scenario));
+      });
+
+      if (cards.length) loadScenario("request");
+    })();
   </script>
 
 </body>
